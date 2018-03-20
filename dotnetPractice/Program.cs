@@ -14,31 +14,18 @@ namespace dotnetPractice
             }
         }
 
-        void Go()
+        static void WriteX()
         {
-            if (!_done)
+            for (int i = 0; i <= 1000; i++)
             {
-                _done = true;
-                Console.WriteLine("DONE");
+                Console.Write("X");
             }
         }
 
         static void Main(string[] args)
         {
-            //Thread t = new Thread(WriteY);
-            //t.Start();
-            ////t.Join();
-            ////Console.WriteLine("End WriteY");
-
-            //for(int i = 0; i <= 1000; i++)
-            //{
-            //    Console.Write("X");
-            //}
-
-            Program p = new Program();
-            new Thread(p.Go).Start();
-            p.Go();
-
+            new Thread(WriteX).Start();
+            new Thread(WriteY).Start();
 
             Console.ReadLine();
         }
