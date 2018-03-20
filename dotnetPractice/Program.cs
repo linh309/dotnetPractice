@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace dotnetPractice
 
         static void WriteB()
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             for (int i = 0; i <= 3000; i++)
             {
                 Console.Write("B");
@@ -28,20 +29,25 @@ namespace dotnetPractice
         {
             //new Thread(WriteX).Start();
             //new Thread(WriteY).Start();
-            for (int i = 0; i <= 3000; i++)
-            {
-                Console.Write("G");
-            }
+            //for (int i = 0; i <= 3000; i++)
+            //{
+            //    Console.Write("G");
+            //}
 
-            Task runB = Task.Run(() => WriteB());
-            runB.Wait();
+            //Task runB = Task.Run(() => WriteB());
+            //runB.Wait();
 
-            for (int i = 0; i <= 3000; i++)
-            {
-                Console.Write("7");
-            }
+            //for (int i = 0; i <= 3000; i++)
+            //{
+            //    Console.Write("7");
+            //}
+            //Task.Run(() => WriteA());
+
+            Task<int> primeNumberTask = Task.Run(() =>                Enumerable.Range(2, 3000000)                .Count(n => Enumerable.Range(2, (int)Math.Sqrt(n) - 1)                                        .All(i => n % i > 0)));            Console.WriteLine("Task running...");
+            Console.WriteLine("The answer is " + primeNumberTask.Result);
             Task.Run(() => WriteA());
-          
+            Task.Run(() => WriteB());
+
             Console.WriteLine("End of application");
             Console.ReadLine();
         }
