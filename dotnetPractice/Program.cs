@@ -17,6 +17,7 @@ namespace dotnetPractice
 
         static void WriteB()
         {
+            Thread.Sleep(3000);
             for (int i = 0; i <= 3000; i++)
             {
                 Console.Write("B");
@@ -27,10 +28,21 @@ namespace dotnetPractice
         {
             //new Thread(WriteX).Start();
             //new Thread(WriteY).Start();
+            for (int i = 0; i <= 3000; i++)
+            {
+                Console.Write("G");
+            }
 
+            Task runB = Task.Run(() => WriteB());
+            runB.Wait();
+
+            for (int i = 0; i <= 3000; i++)
+            {
+                Console.Write("7");
+            }
             Task.Run(() => WriteA());
-            Task.Run(() => WriteB());
-
+          
+            Console.WriteLine("End of application");
             Console.ReadLine();
         }
     }
