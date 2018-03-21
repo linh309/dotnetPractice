@@ -10,6 +10,9 @@ namespace dotnetPractice
         bool _done;
         static void WriteA()
         {
+            var number = 10;
+            var i = 0;
+            var b = number / i;
             for (int i = 0; i <= 1000; i++)
             {
                 Console.Write("A");
