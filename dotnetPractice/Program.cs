@@ -43,28 +43,21 @@ namespace dotnetPractice
                     throw;
             }
         }
-      
+
         static void Main(string[] args)
         {
-            //new Thread(WriteX).Start();
-            //new Thread(WriteY).Start();
-            //for (int i = 0; i <= 3000; i++)
-            //{
-            //    Console.Write("G");
-            //}
+            Task<int> primeNumberTask = Task.Run(() =>
+                        Enumerable.Range(2, 3000000).Count(n =>
+                        Enumerable.Range(2, (int)Math.Sqrt(n) - 1).All(i => n % i > 0)));
 
-            //Task runB = Task.Run(() => WriteB());
-            //runB.Wait();
+            var awaiter = primeNumberTask.GetAwaiter();
+            awaiter.OnCompleted(() =>
+            {
+                Console.WriteLine("I just finish");
+                var result = awaiter.GetResult();
+                Console.WriteLine("Result is: {0}", result);
 
-            //for (int i = 0; i <= 3000; i++)
-            //{
-            //    Console.Write("7");
-            //}
-            //Task.Run(() => WriteA());
-
-            Task task = Task.Run(() => RunException());
-            //task.Wait();
-            Task.Run(() => WriteB());
+            });
 
             Console.WriteLine("End of application");
             Console.ReadLine();
