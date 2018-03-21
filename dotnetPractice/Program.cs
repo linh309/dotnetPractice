@@ -11,8 +11,8 @@ namespace dotnetPractice
         static void WriteA()
         {
             var number = 10;
-            var i = 0;
-            var b = number / i;
+            var divided = 0;
+            var b = number / divided;
             for (int i = 0; i <= 1000; i++)
             {
                 Console.Write("A");
@@ -28,6 +28,22 @@ namespace dotnetPractice
             }
         }
 
+        static void RunException()
+        {
+            Task task = Task.Run(() => { throw null; });
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException aex)
+            {
+                if (aex.InnerException is NullReferenceException)
+                    Console.WriteLine("Null exception from Task!");
+                else
+                    throw;
+            }
+        }
+      
         static void Main(string[] args)
         {
             //new Thread(WriteX).Start();
@@ -46,9 +62,8 @@ namespace dotnetPractice
             //}
             //Task.Run(() => WriteA());
 
-            Task<int> primeNumberTask = Task.Run(() =>                Enumerable.Range(2, 3000000)                .Count(n => Enumerable.Range(2, (int)Math.Sqrt(n) - 1)                                        .All(i => n % i > 0)));            Console.WriteLine("Task running...");
-            Console.WriteLine("The answer is " + primeNumberTask.Result);
-            Task.Run(() => WriteA());
+            Task task = Task.Run(() => RunException());
+            //task.Wait();
             Task.Run(() => WriteB());
 
             Console.WriteLine("End of application");
